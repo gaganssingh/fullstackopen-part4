@@ -74,4 +74,5 @@ const blogsInDb = async () => {
 module.exports = {
    listWithOneBlog,
    initialBlogs,
+   blogsInDb,
 };

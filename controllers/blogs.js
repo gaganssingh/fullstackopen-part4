@@ -15,12 +15,18 @@ blogsRouter.get("/", async (req, res) => {
 });
 
 // POST NEW BLOG
-blogsRouter.post("/", (req, res) => {
+blogsRouter.post("/", async (req, res) => {
    const blog = new Blog(req.body);
 
-   blog.save().then((result) => {
-      res.status(201).json(result);
-   });
+   // Using promise chaining
+   // blog.save().then((result) => {
+   //    res.status(201).json(result);
+   // });
+
+   // Async/await without try catch block
+   // using express-async-errors npm package
+   const result = await blog.save();
+   res.status(201).json(result);
 });
 
 module.exports = blogsRouter;
