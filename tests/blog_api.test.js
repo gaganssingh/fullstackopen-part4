@@ -64,6 +64,14 @@ describe("Endpoint: /api/blogs", () => {
       expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1);
       expect(newlyAddedBlog.likes).toEqual(0);
    });
+
+   test("Ex4.12 - POST /api/blogs Server responds with 400 Bad Request if 'title' or 'url' missing", async () => {
+      const newBlogPost = {
+         author: "Test Author",
+      };
+
+      await api.post("/api/blogs").send(newBlogPost).expect(400);
+   });
 });
 
 afterAll(() => {
