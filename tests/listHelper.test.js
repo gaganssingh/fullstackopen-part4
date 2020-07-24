@@ -1,14 +1,14 @@
 const listHelper = require("../utils/list_helper");
 const helper = require("./test_helper");
 
-test("dummy returns one", () => {
+test.skip("dummy returns one", () => {
    const blogs = [];
 
    const result = listHelper.dummy(helper.listWithOneBlog);
    expect(result).toBe(1);
 });
 
-describe("total likes", () => {
+describe.skip("total likes", () => {
    test("when list has only one blog equals to the likes of that", () => {
       const result = listHelper.totalLikes(helper.listWithOneBlog);
       expect(result).toBe(5);

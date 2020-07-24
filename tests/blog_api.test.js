@@ -15,12 +15,17 @@ beforeEach(async () => {
    }
 });
 
-describe.only("Endpoint: /api/blogs", () => {
-   test("GET all blogs from /api/blogs", async () => {
+describe("Endpoint: /api/blogs", () => {
+   test("Ex. 4.8 - GET all blogs from /api/blogs", async () => {
       await api
          .get("/api/blogs")
          .expect(200)
          .expect("Content-Type", /application\/json/);
+   });
+
+   test("Ex. 4.9 - '_id' is returned as 'id' from the db", async () => {
+      const response = await api.get("/api/blogs");
+      expect(response.body[0].id).toBeDefined();
    });
 });
 
