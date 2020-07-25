@@ -2,6 +2,7 @@ const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const blog = require("../models/blog");
 
 // GET ALL BLOGS
 blogsRouter.get("/", async (req, res) => {
@@ -21,7 +22,6 @@ blogsRouter.get("/", async (req, res) => {
 
 // POST NEW BLOG
 blogsRouter.post("/", async (req, res) => {
-   // console.log(req.body);
    const body = req.body;
 
    const decodedToken = jwt.verify(req.token, process.env.SECRET);
@@ -59,8 +59,19 @@ blogsRouter.post("/", async (req, res) => {
 
 // DELETE a blog post
 blogsRouter.delete(`/:id`, async (req, res) => {
-   await Blog.findByIdAndRemove(req.params.id);
-   res.status(204).end();
+   const decodedToken = jwt.verify(req.token, process.env.SECRET);
+   if (!req.token || !decodedToken.id) {
+      return response.status(401).json({ error: "token missing or invalid" });
+   }
+
+   let user = await User.findById(decodedToken.id);
+   const blogToDelete = await Blog.findById(req.params.id);
+
+   if (blogToDelete.user.toString() === user._id.toString()) {
+      blogToDelete.remove();
+      return res.status(204).end();
+   }
+   res.status(400).json({ error: "unauthorized access" });
 });
 
 // PUT - Update a blog post by id

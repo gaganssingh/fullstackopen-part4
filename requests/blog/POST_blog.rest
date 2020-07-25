@@ -1,11 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMWM0ZTBlMzEwZWQxM2NhNDUyY2MxMyIsImlhdCI6MTU5NTcxMzI1MX0.mxBHbHy2kejdV8lTuOEYrGRUl23zJ9lYzh7KUf9vaVI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhZ2Fuc2luZ2giLCJpZCI6IjVmMWM0ZTUyMzEwZWQxM2NhNDUyY2MxNCIsImlhdCI6MTU5NTcxNDE0MX0.VLAvdsKP5U5OncFBkoBKeqMBozZ1g52CmAO0OXmiw6M
 
 {
-    "title": "A new blog post by root",
+    "title": "A new blog post by gagansingh",
     "author": "root",
     "url": "https://www.google.com",
     "likes": 7,
-    "userId": "5f1c4e0e310ed13ca452cc13"
+    "userId": "5f1c4e52310ed13ca452cc14"
 }
