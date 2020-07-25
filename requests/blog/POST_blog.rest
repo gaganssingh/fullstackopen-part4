@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhZ2Fuc2luZ2giLCJpZCI6IjVmMWM0ZTUyMzEwZWQxM2NhNDUyY2MxNCIsImlhdCI6MTU5NTcxNDE0MX0.VLAvdsKP5U5OncFBkoBKeqMBozZ1g52CmAO0OXmiw6M
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhZ2Fuc2luZ2giLCJpZCI6IjVmMWM0ZTUyMzEwZWQxM2NhNDUyY2MxNCIsImlhdCI6MTU5NTcyMDE5Nn0.Pi-OpN3mh69jozgGtFMkJDKTgw3sUGmx0GGa5vl6Q_g
 
 {
     "title": "A new blog post by gagansingh",
