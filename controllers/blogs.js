@@ -40,4 +40,28 @@ blogsRouter.post("/", async (req, res) => {
    res.status(201).json(result);
 });
 
+// DELETE a blog post
+blogsRouter.delete(`/:id`, async (req, res) => {
+   await Blog.findByIdAndRemove(req.params.id);
+   res.status(204).end();
+});
+
+// PUT - Update a blog post by id
+blogsRouter.put(`/:id`, async (req, res, next) => {
+   let existingBlog = await Blog.findById(req.params.id);
+
+   const body = req.body;
+   const updatedBlog = {
+      title: body.title || existingBlog.title,
+      author: body.author || existingBlog.author,
+      url: body.url || existingBlog.url,
+      likes: body.likes || existingBlog.likes,
+   };
+
+   const updated = await Blog.findByIdAndUpdate(req.params.id, updatedBlog, {
+      new: true,
+   });
+   res.json(updated);
+});
+
 module.exports = blogsRouter;

@@ -72,6 +72,19 @@ describe("Endpoint: /api/blogs", () => {
 
       await api.post("/api/blogs").send(newBlogPost).expect(400);
    });
+
+   test("Ex4.13 DELETE /api/blogs Delete a blog post from server", async () => {
+      const blogsAtStart = await helper.blogsInDb();
+      const blogToDelete = blogsAtStart[0];
+
+      await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+
+      const blogsAtEnd = await helper.blogsInDb();
+      expect(blogsAtEnd.length).toBe(helper.initialBlogs.length - 1);
+
+      const titles = blogsAtEnd.map((r) => r.content);
+      expect(titles).not.toContain(blogToDelete.title);
+   });
 });
 
 afterAll(() => {
