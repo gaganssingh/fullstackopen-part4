@@ -89,7 +89,7 @@ describe("Endpoint: /api/blogs", () => {
    });
 });
 
-describe.only("When there is initially one user in db", () => {
+describe("When there is initially one user in db", () => {
    beforeEach(async () => {
       await User.deleteMany({});
 
@@ -119,6 +119,63 @@ describe.only("When there is initially one user in db", () => {
 
       const usernames = usersAtEnd.map((u) => u.username);
       expect(usernames).toContain(newUser.username);
+   });
+});
+
+describe.only("When creating a new user", () => {
+   beforeEach(async () => {
+      await User.deleteMany({});
+
+      const passwordHash = await bcrypt.hash("sekret", 10);
+      const user = new User({ username: "root", passwordHash });
+
+      await user.save();
+   });
+
+   test("Ex4.16 POST /api/users User creation fails when password less than 3 characters", async () => {
+      const usersAtStart = await helper.usersInDb();
+
+      const invalid = {
+         username: "testusername",
+         name: "user name",
+         password: "12",
+      };
+
+      const result = await api
+         .post("/api/users")
+         .send(invalid)
+         .expect(400)
+         .expect("Content-Type", /application\/json/);
+
+      expect(result.body.error).toContain(
+         "password must be atleast 3 characters long"
+      );
+
+      const usersAtEnd = await helper.usersInDb();
+      expect(usersAtEnd).toHaveLength(usersAtStart.length);
+   });
+
+   test("Ex4.16 POST /api/users User creation fails when username less than 3 characters", async () => {
+      const usersAtStart = await helper.usersInDb();
+
+      const invalidUser = {
+         username: "u",
+         name: "user name",
+         password: "1234567",
+      };
+
+      const result = await api
+         .post("/api/users")
+         .send(invalidUser)
+         .expect(400)
+         .expect("Content-Type", /application\/json/);
+
+      expect(result.body.error).toContain(
+         "username must be atleast 3 characters long"
+      );
+
+      const usersAtEnd = await helper.usersInDb();
+      expect(usersAtEnd).toHaveLength(usersAtStart.length);
    });
 });
 
