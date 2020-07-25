@@ -6,6 +6,7 @@ const config = require("./utils/config");
 const middleware = require("./utils/middleware");
 const logger = require("./utils/logger");
 const blogsRouter = require("./controllers/blogs");
+const usersRouter = require("./controllers/users");
 
 const app = express();
 
@@ -29,7 +30,8 @@ app.use(express.json()); // Body parser
 app.use(middleware.requestLogger); // general console logger
 
 // Routes
-app.use("/api/blogs", blogsRouter);
+app.use("/api/blogs", blogsRouter); // blogs route
+app.use("/api/users", usersRouter); // users route
 
 // MIDDLEWARES
 app.use(middleware.unknownEndpoint); // Catch unknown endpoints

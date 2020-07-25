@@ -6,6 +6,10 @@ const blogSchema = mongoose.Schema({
    author: { type: String, minlength: 2, required: true },
    url: { type: String, required: true },
    likes: { type: Number },
+   users: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+   },
 });
 
 // Changes the default returned json object to
