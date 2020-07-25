@@ -1,5 +1,6 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
+const User = require("../models/user");
 
 // GET ALL BLOGS
 blogsRouter.get("/", async (req, res) => {
@@ -10,13 +11,18 @@ blogsRouter.get("/", async (req, res) => {
 
    // Async/await without try catch block
    // using express-async-errors npm package
-   const response = await Blog.find({});
+   const response = await Blog.find({}).populate("user", {
+      username: 1,
+      name: 1,
+   });
    res.json(response);
 });
 
 // POST NEW BLOG
 blogsRouter.post("/", async (req, res) => {
    const body = req.body;
+
+   const user = await User.findById(body.userId);
 
    if (!body.title || !body.url) {
       return res.status(400).end();
@@ -27,6 +33,7 @@ blogsRouter.post("/", async (req, res) => {
       author: body.author,
       url: body.url,
       likes: body.likes || 0,
+      user: user._id,
    });
 
    // Using promise chaining
@@ -36,8 +43,11 @@ blogsRouter.post("/", async (req, res) => {
 
    // Async/await without try catch block
    // using express-async-errors npm package
-   const result = await blog.save();
-   res.status(201).json(result);
+   const savedBlog = await blog.save();
+   user.blogs = user.blogs.concat(savedBlog._id);
+   await user.save();
+
+   res.status(201).json(savedBlog);
 });
 
 // DELETE a blog post
